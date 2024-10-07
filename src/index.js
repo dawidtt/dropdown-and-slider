@@ -53,7 +53,20 @@ function nextSlide() {
     imgsArray[currentSlideNumber].classList.toggle("show-slide");
   }
 }
-function previousSlide() {}
+function previousSlide() {
+  if (currentSlideNumber > 0) {
+    imgsArray[currentSlideNumber].classList.toggle("show-slide");
+    currentSlideNumber--;
+    imgsArray[currentSlideNumber].classList.toggle("show-slide");
+  } else {
+    imgsArray[currentSlideNumber].classList.toggle("show-slide");
+    currentSlideNumber = numberOfSlides - 1;
+    imgsArray[currentSlideNumber].classList.toggle("show-slide");
+  }
+}
 
 const nextBtn = document.querySelector("#next");
 nextBtn.addEventListener("click", nextSlide);
+
+const previousBtn = document.querySelector("#previous");
+previousBtn.addEventListener("click", previousSlide);

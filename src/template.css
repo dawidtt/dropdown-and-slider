@@ -61,6 +61,11 @@ img {
   right: 5%;
   top: 45%;
 }
+.slider-wide #previous {
+  position: absolute;
+  left: 5%;
+  top: 45%;
+}
 img {
   width: 500px;
   height: 500px;
