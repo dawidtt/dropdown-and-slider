@@ -33,15 +33,20 @@ let currentSlideNumber = 0;
 const imgsArray = [...document.querySelectorAll(".slider-wide img")];
 const numberOfSlides = imgsArray.length;
 imgsArray[currentSlideNumber].classList.toggle("show-slide");
-// for (let i = 0; i < numberOfSlides; i++) {
-//   console.log("halo");
 
-//   setTimeout(() => {
-//     imgsArray[i].classList.toggle("show-slide");
-//     console.log("zmiana");
-//   }, i * 4000);
-//   imgsArray[i].classList.toggle("show-slide");
-// }
+const circlesPath = document.querySelector("#circles");
+for (let i = 0; i < imgsArray.length; i++) {
+  const circle = document.createElement("div");
+  circle.innerHTML = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="50" fill="white"  stroke="black" stroke-width="5"/>
+</svg>`;
+  circle.classList.add(`circle-${i}`);
+  circle.addEventListener("click", () => switchToSlideOfIndex(i));
+  circlesPath.appendChild(circle);
+}
+
+setCurrentSlide(currentSlideNumber);
+
 function nextSlide() {
   if (currentSlideNumber < numberOfSlides - 1) {
     imgsArray[currentSlideNumber].classList.toggle("show-slide");
@@ -52,6 +57,7 @@ function nextSlide() {
     currentSlideNumber = 0;
     imgsArray[currentSlideNumber].classList.toggle("show-slide");
   }
+  setCurrentSlide(currentSlideNumber);
 }
 function previousSlide() {
   if (currentSlideNumber > 0) {
@@ -63,10 +69,27 @@ function previousSlide() {
     currentSlideNumber = numberOfSlides - 1;
     imgsArray[currentSlideNumber].classList.toggle("show-slide");
   }
+  setCurrentSlide(currentSlideNumber);
 }
+function switchToSlideOfIndex(index) {
+  imgsArray[currentSlideNumber].classList.toggle("show-slide");
+  currentSlideNumber = index;
+  imgsArray[currentSlideNumber].classList.toggle("show-slide");
+  setCurrentSlide(currentSlideNumber);
+}
+function setCurrentSlide(index) {
+  const allCircles = [...document.querySelectorAll("#circles svg circle")];
+  for (const circle of allCircles) {
+    circle.style.fill = "white";
+  }
 
+  const circle = document.querySelector(`.circle-${index} circle`);
+  circle.style.fill = "red";
+}
 const nextBtn = document.querySelector("#next");
 nextBtn.addEventListener("click", nextSlide);
 
 const previousBtn = document.querySelector("#previous");
 previousBtn.addEventListener("click", previousSlide);
+
+setInterval(nextSlide, 5000);
